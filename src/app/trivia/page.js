@@ -10,7 +10,6 @@ export default function Trivia() {
   const [timeLeft, setTimeLeft] = useState(45)
   const [quizStarted, setQuizStarted] = useState(false)
 
-  // This would be fetched from your API
   const questions = {
     easy: [
       {
