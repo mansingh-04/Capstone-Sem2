@@ -1,4 +1,3 @@
-"use client"
 import { useState, useEffect } from "react"
 
 export default function Trivia() {
@@ -9,7 +8,6 @@ export default function Trivia() {
   const [difficulty, setDifficulty] = useState("easy")
   const [timeLeft, setTimeLeft] = useState(45)
   const [quizStarted, setQuizStarted] = useState(false)
-
   const questions = {
     easy: [
       {
@@ -122,7 +120,7 @@ export default function Trivia() {
   }
 
   const handleNextQuestion = () => {
-    // Check if answer is correct and update score
+
     if (selectedOption === questions[difficulty][currentQuestion].correctAnswer) {
       setScore(score + 100)
     }

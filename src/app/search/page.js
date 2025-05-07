@@ -27,7 +27,6 @@ export default function Search() {
     fetchGenres();
   }, []);
 
-  // Live search as user types (debounced)
   useEffect(() => {
     if (!searchQuery.trim()) {
       setSearchResults([])
@@ -38,10 +37,8 @@ export default function Search() {
     debounceTimeout.current = setTimeout(() => {
       handleSearch()
     }, 400)
-    // eslint-disable-next-line
   }, [searchQuery, searchFilter])
 
-  // Helper for TV details
   async function getTVDetails(tvId) {
     const details = await fetch(`https://api.themoviedb.org/3/tv/${tvId}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US`).then(res => res.json());
     return details;
@@ -51,7 +48,6 @@ export default function Search() {
     return credits;
   }
 
-  // Handle search form submission
   const handleSearch = async (e) => {
     if (e) e.preventDefault()
     if (!searchQuery.trim()) return
@@ -155,7 +151,7 @@ export default function Search() {
       setShowModal(true);
       return;
     }
-    // Movie logic
+
     try {
       const details = await getMovieDetails(item.id);
       const credits = await fetch(`https://api.themoviedb.org/3/movie/${item.id}/credits?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`)
@@ -259,7 +255,6 @@ export default function Search() {
           </div>
         </div>
       )}
-      {/* Movie Details Modal */}
       {showModal && selectedMovie && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
