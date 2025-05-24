@@ -21,7 +21,6 @@ export default function Navbar() {
           <Link href="/recommendations" className={pathname.startsWith("/recommendations") ? "active" : ""}>Recommendations</Link>
           <Link href="/search" className={pathname.startsWith("/search") ? "active" : ""}>Search</Link>
           <Link href="/trivia" className={pathname.startsWith("/trivia") ? "active" : ""}>Trivia</Link>
-          <Link href="/about" className={pathname.startsWith("/about") ? "active" : ""}>About</Link>
         </div>
         <div className="navbar-actions">
           <ThemeToggle />
@@ -41,7 +40,6 @@ export default function Navbar() {
             <Link href="/recommendations" className={pathname.startsWith("/recommendations") ? "active" : ""} onClick={() => setMobileMenuOpen(false)}>Recommendations</Link>
             <Link href="/search" className={pathname.startsWith("/search") ? "active" : ""} onClick={() => setMobileMenuOpen(false)}>Search</Link>
             <Link href="/trivia" className={pathname.startsWith("/trivia") ? "active" : ""} onClick={() => setMobileMenuOpen(false)}>Trivia</Link>
-            <Link href="/about" className={pathname.startsWith("/about") ? "active" : ""} onClick={() => setMobileMenuOpen(false)}>About</Link>
             <div className="navbar-mobile-actions">
               <ThemeToggle />
               <Link href="/login" className="btn btn-secondary" onClick={() => setMobileMenuOpen(false)}>Sign In</Link>
@@ -53,7 +51,6 @@ export default function Navbar() {
     </nav>
   )
 }
-
 function ThemeToggle() {
   const [theme, setTheme] = useState("light");
 
@@ -109,3 +106,4 @@ function ThemeToggle() {
     </button>
   );
 }
+

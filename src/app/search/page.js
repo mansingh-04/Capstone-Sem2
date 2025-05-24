@@ -170,28 +170,57 @@ export default function Search() {
   }
 
   return (
-    <div className="container">
-      <h1 className="section-title">Search Movies</h1>
-      <form onSubmit={handleSearch} className="search-form">
-        <div className="search-container">
-          <input
-            type="text"
-            className="search-input"
-            placeholder="Search movies, actors, or directors..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button type="submit" className="search-button">
-            {isLoading ? "Searching..." : "Search"}
-          </button>
-        </div>
-        <div className="genre-tags">
-          <button type="button" className={`genre-tag${searchFilter === "all" ? " active" : ""}`} onClick={() => setSearchFilter("all")}>All</button>
-          <button type="button" className={`genre-tag${searchFilter === "movie" ? " active" : ""}`} onClick={() => setSearchFilter("movie")}>Movies</button>
-          <button type="button" className={`genre-tag${searchFilter === "tv" ? " active" : ""}`} onClick={() => setSearchFilter("tv")}>TV Shows</button>
-          <button type="button" className={`genre-tag${searchFilter === "person" ? " active" : ""}`} onClick={() => setSearchFilter("person")}>People</button>
-        </div>
-      </form>
+    <div className="search-page">
+      <h1 className="search-page-title">Search Movies</h1>
+      
+      <div className="search-box-container">
+        <form onSubmit={handleSearch}>
+          <div className="search-input-wrapper">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search movies, actors, or directors..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button type="submit" className="search-button">
+              {isLoading ? "Searching..." : "Search"}
+            </button>
+          </div>
+          
+          <div className="search-filters">
+            <button 
+              type="button" 
+              className={`filter-button ${searchFilter === "all" ? "active" : ""}`} 
+              onClick={() => setSearchFilter("all")}
+            >
+              All
+            </button>
+            <button 
+              type="button" 
+              className={`filter-button ${searchFilter === "movie" ? "active" : ""}`} 
+              onClick={() => setSearchFilter("movie")}
+            >
+              Movies
+            </button>
+            <button 
+              type="button" 
+              className={`filter-button ${searchFilter === "tv" ? "active" : ""}`} 
+              onClick={() => setSearchFilter("tv")}
+            >
+              TV Shows
+            </button>
+            <button 
+              type="button" 
+              className={`filter-button ${searchFilter === "person" ? "active" : ""}`} 
+              onClick={() => setSearchFilter("person")}
+            >
+              People
+            </button>
+          </div>
+        </form>
+      </div>
+
       {searchResults.length > 0 ? (
         <div>
           <h2 className="search-results-title">Search Results</h2>
@@ -200,9 +229,15 @@ export default function Search() {
               (item.type === 'movie' || item.type === 'tv') ? (
                 <div key={item.id} className="search-result-card">
                   <div className="relative">
-                    <Image src={item.posterPath || "/placeholder.svg"} alt={item.title} fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 250px" style={{ objectFit: "cover" }} />
+                    <Image 
+                      src={item.posterPath || "/placeholder.svg"} 
+                      alt={item.title} 
+                      fill 
+                      sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 250px" 
+                      style={{ objectFit: "cover" }} 
+                    />
                   </div>
-                  <div className="p-4 search-result-content">
+                  <div className="search-result-content">
                     <h3>{item.title}</h3>
                     <p>
                       {item.year}
@@ -213,7 +248,7 @@ export default function Search() {
                     </p>
                     <div className="details-btn-container">
                       <button 
-                        className="text-sm btn btn-primary py-1 px-3"
+                        className="btn btn-primary"
                         onClick={() => openModal(item)}
                       >
                         Details
@@ -224,7 +259,13 @@ export default function Search() {
               ) : (
                 <div key={item.id} className="search-result-card">
                   <div className="relative">
-                    <Image src={item.image || "/placeholder.svg"} alt={item.title} fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 250px" style={{ objectFit: "cover" }} />
+                    <Image 
+                      src={item.image || "/placeholder.svg"} 
+                      alt={item.title} 
+                      fill 
+                      sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 250px" 
+                      style={{ objectFit: "cover" }} 
+                    />
                   </div>
                   <div className="search-result-content">
                     <h3>{item.title}</h3>
@@ -236,25 +277,24 @@ export default function Search() {
           </div>
         </div>
       ) : searchQuery && !isLoading ? (
-        <div className="search-no-results">
+        <div className="search-message">
           <p>No results found for "{searchQuery}"</p>
           <p>Try different keywords or filters</p>
         </div>
       ) : null}
+
       {!searchQuery && (
-        <div className="search-empty">
-          <p>Enter a search term to find movies, actors, or directors</p>
-          <div className="search-popular">
-            <h3>Popular Searches</h3>
-            <div className="genre-tags">
-              <button className="genre-tag" onClick={() => setSearchQuery("Marvel")}>Marvel</button>
-              <button className="genre-tag" onClick={() => setSearchQuery("Christopher Nolan")}>Christopher Nolan</button>
-              <button className="genre-tag" onClick={() => setSearchQuery("Tom Hanks")}>Tom Hanks</button>
-              <button className="genre-tag" onClick={() => setSearchQuery("Star Wars")}>Star Wars</button>
-            </div>
+        <div className="popular-searches">
+          <h3 className="popular-searches-title">Popular Searches</h3>
+          <div className="popular-tags">
+            <button className="popular-tag" onClick={() => setSearchQuery("Marvel")}>Marvel</button>
+            <button className="popular-tag" onClick={() => setSearchQuery("Christopher Nolan")}>Christopher Nolan</button>
+            <button className="popular-tag" onClick={() => setSearchQuery("Tom Hanks")}>Tom Hanks</button>
+            <button className="popular-tag" onClick={() => setSearchQuery("Star Wars")}>Star Wars</button>
           </div>
         </div>
       )}
+
       {showModal && selectedMovie && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>

@@ -25,7 +25,6 @@ export default function Footer() {
           <div className="footer-links">
             <h3 className="footer-title">Company</h3>
             <ul>
-              <li><Link href="/about">About Us</Link></li>
               <li><Link href="/contact">Contact</Link></li>
               <li><Link href="/privacy-policy">Privacy Policy</Link></li>
               <li><Link href="/terms-of-service">Terms of Service</Link></li>

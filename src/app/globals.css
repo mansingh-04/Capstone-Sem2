@@ -97,6 +97,8 @@ a {
   display: flex;
   flex-direction: column;
   height: 100%;
+  animation: fadeInUp 0.6s ease-out;
+  animation-fill-mode: both;
 }
 
 .card:hover {
@@ -134,6 +136,7 @@ a {
   margin-bottom: 1.5rem;
   color: var(--text);
   letter-spacing: -0.5px;
+  animation: fadeInUp 0.6s ease-out;
 }
 
 h1, .hero-title {
@@ -142,6 +145,7 @@ h1, .hero-title {
   margin-bottom: 1rem;
   color: var(--text);
   letter-spacing: -1px;
+  animation: fadeInUp 0.8s ease-out 0.3s backwards;
 }
 
 h2, .hero-subtitle {
@@ -149,21 +153,32 @@ h2, .hero-subtitle {
   color: var(--text-muted);
   margin-bottom: 1.2rem;
   font-weight: 500;
+  animation: fadeInUp 0.8s ease-out 0.4s backwards;
+}
+
+.genre-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 2rem 0;
+  justify-content: center;
+  padding: 0 1rem;
+  animation: fadeInUp 0.6s ease-out 0.1s backwards;
 }
 
 .genre-tag {
-  display: inline-block;
-  padding: 0.35rem 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.2rem;
   border-radius: 1.5rem;
-  font-size: 1rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
   background-color: var(--background-light);
   color: var(--primary);
   border: 1.5px solid var(--primary);
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, border 0.2s;
+  margin: 0;
 }
 
 .genre-tag.active, .genre-tag:hover, .genre-tag:focus {
@@ -175,7 +190,7 @@ h2, .hero-subtitle {
   position: relative;
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 2rem auto;
   background: var(--background-light);
   border-radius: 0.75rem;
   box-shadow: 0 2px 8px rgba(30,41,59,0.06);
@@ -184,8 +199,8 @@ h2, .hero-subtitle {
 
 .search-input {
   width: 100%;
-  padding: 0.85rem 1.2rem;
-  padding-right: 3.5rem;
+  padding: 1rem 1.5rem;
+  padding-right: 4rem;
   border-radius: 0.75rem;
   border: 1px solid var(--border);
   background-color: transparent;
@@ -202,14 +217,14 @@ h2, .hero-subtitle {
 
 .search-button {
   position: absolute;
-  right: 0.7rem;
+  right: 0.8rem;
   top: 50%;
   transform: translateY(-50%);
   background-color: var(--primary);
   color: white;
   border: none;
   border-radius: 0.5rem;
-  padding: 0.5rem 1.1rem;
+  padding: 0.6rem 1.2rem;
   cursor: pointer;
   font-weight: 600;
   font-size: 1rem;
@@ -218,6 +233,35 @@ h2, .hero-subtitle {
 
 .search-button:hover, .search-button:focus {
   background-color: var(--primary-hover);
+}
+
+.search-empty {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.search-popular {
+  margin-top: 2rem;
+}
+
+.search-popular h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.search-no-results {
+  text-align: center;
+  margin-top: 3rem;
+  color: var(--text-muted);
+}
+
+.search-results-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1.5rem;
+  color: var(--text);
 }
 
 .movie-grid {
@@ -229,7 +273,18 @@ h2, .hero-subtitle {
   margin-left: auto;
   margin-right: auto;
   padding: 0 1rem;
+  animation: fadeInUp 0.6s ease-out 0.2s backwards;
 }
+
+.movie-grid .card:nth-child(1) { animation-delay: 0.1s; }
+.movie-grid .card:nth-child(2) { animation-delay: 0.2s; }
+.movie-grid .card:nth-child(3) { animation-delay: 0.3s; }
+.movie-grid .card:nth-child(4) { animation-delay: 0.4s; }
+.movie-grid .card:nth-child(5) { animation-delay: 0.5s; }
+.movie-grid .card:nth-child(6) { animation-delay: 0.6s; }
+.movie-grid .card:nth-child(7) { animation-delay: 0.7s; }
+.movie-grid .card:nth-child(8) { animation-delay: 0.8s; }
+.movie-grid .card:nth-child(n+9) { animation-delay: 0.9s; }
 
 .hero-section {
   position: relative;
@@ -237,6 +292,7 @@ h2, .hero-subtitle {
   background-size: cover;
   background-position: center;
   text-align: center;
+  animation: fadeIn 0.8s ease-out;
 }
 
 .hero-section::before {
@@ -259,40 +315,257 @@ h2, .hero-subtitle {
   z-index: 1;
   max-width: 800px;
   margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out 0.2s backwards;
 }
 
 .trivia-container {
   background-color: var(--background-light);
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   padding: 2rem;
-  margin-top: 3rem;
+  margin: 2rem auto;
+  max-width: 800px;
+  box-shadow: 0 8px 32px rgba(30,41,59,0.12);
+  border: 1px solid var(--border);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.trivia-welcome {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.trivia-welcome h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(120deg, var(--primary), #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.trivia-welcome p {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.6s ease-out 0.2s backwards;
+}
+
+.difficulty-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  animation: fadeInUp 0.6s ease-out 0.4s backwards;
+}
+
+.difficulty-button {
+  position: relative;
+  padding: 2rem 1.5rem;
+  border-radius: 1rem;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.difficulty-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.difficulty-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.difficulty-button:hover::before {
+  opacity: 1;
+}
+
+.difficulty-button.easy {
+  background: linear-gradient(135deg, var(--primary), #9333ea);
+}
+
+.difficulty-button.medium {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.difficulty-button.hard {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.difficulty-button .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.difficulty-button .description {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .difficulty-buttons {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    gap: 1rem;
+  }
+
+  .trivia-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .trivia-welcome h2 {
+    font-size: 2rem;
+  }
+
+  .trivia-welcome p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .difficulty-button {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .trivia-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.trivia-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.trivia-header .flex {
+  gap: 1rem;
+  align-items: center;
+}
+
+.trivia-header .timer-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--background);
+  padding: 0.6rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+}
+
+.trivia-header .timer {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary);
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.trivia-header .difficulty-badge {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.trivia-header .difficulty-badge.easy {
+  background-color: var(--primary);
+  color: white;
+}
+
+.trivia-header .difficulty-badge.medium {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.trivia-header .difficulty-badge.hard {
+  background-color: #ef4444;
+  color: white;
 }
 
 .trivia-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 .trivia-option {
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border);
-  border-radius: 0.375rem;
-  padding: 1rem;
+  border-radius: 0.75rem;
+  padding: 1.2rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  font-size: 1.1rem;
 }
 
 .trivia-option:hover {
   background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 .trivia-option.selected {
@@ -377,6 +650,35 @@ h2, .hero-subtitle {
   }
   h1, .hero-title {
     font-size: 1.3rem;
+  }
+  .trivia-container {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+  .trivia-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .trivia-header .timer-section {
+    justify-content: center;
+    width: 100%;
+  }
+  .trivia-header .timer {
+    font-size: 1.1rem;
+  }
+  .trivia-header .difficulty-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+  }
+  .trivia-options {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .trivia-option {
+    padding: 1rem;
+    font-size: 1rem;
   }
 }
 
@@ -487,7 +789,7 @@ h2, .hero-subtitle {
 .navbar-actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 .navbar-toggle {
   display: none;
@@ -544,8 +846,9 @@ h2, .hero-subtitle {
 }
 .navbar-mobile-actions {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-top: 1.2rem;
+  justify-content: center;
 }
 @media (max-width: 600px) {
   .navbar-container {
@@ -559,7 +862,7 @@ h2, .hero-subtitle {
     gap: 0.7rem;
   }
   .navbar-mobile-actions {
-    gap: 0.5rem;
+    gap: 1rem;
   }
   .navbar-logo {
     font-size: 1.1rem;
@@ -857,4 +1160,663 @@ h2, .hero-subtitle {
   margin-top: auto;
   display: flex;
   justify-content: center;
+}
+
+/* Add margin between adjacent buttons when not using flex gap */
+.btn + .btn {
+  margin-left: 1rem;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.trivia-container .flex {
+  gap: 1.5rem;
+}
+
+/* Update responsive gaps */
+@media (max-width: 600px) {
+  .hero-ctas {
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn + .btn {
+    margin-left: 0;
+    margin-top: 0.75rem;
+  }
+}
+
+.quiz-completed {
+  text-align: center;
+  padding: 2rem;
+}
+
+.quiz-completed h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(120deg, var(--primary), #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.quiz-completed .score-display {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 1.5rem 0;
+  animation: scaleIn 0.8s ease-out;
+}
+
+.quiz-completed .score-text {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.6s ease-out 0.2s backwards;
+}
+
+.quiz-completed .stats {
+  background-color: var(--background);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  display: inline-block;
+  animation: fadeInUp 0.6s ease-out 0.4s backwards;
+}
+
+.quiz-completed .action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  animation: fadeInUp 0.6s ease-out 0.6s backwards;
+}
+
+.quiz-completed .action-buttons button {
+  min-width: 150px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.quiz-completed .action-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.difficulty-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.difficulty-buttons button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border-radius: 0.75rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.difficulty-buttons button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.difficulty-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.difficulty-buttons button:hover::before {
+  opacity: 1;
+}
+
+.difficulty-buttons button:hover::before {
+  opacity: 1;
+}
+
+.difficulty-buttons button.easy {
+  background: linear-gradient(135deg, var(--primary), #9333ea);
+}
+
+.difficulty-buttons button.medium {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.difficulty-buttons button.hard {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.difficulty-buttons button .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.difficulty-buttons button .description {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .difficulty-buttons {
+    flex-direction: row;
+    max-width: 600px;
+  }
+  
+  .difficulty-buttons button {
+    flex: 1;
+  }
+  
+  .quiz-completed .action-buttons {
+    gap: 1.5rem;
+  }
+  
+  .quiz-completed .action-buttons button {
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 600px) {
+  .trivia-container {
+    padding: 1.5rem;
+    margin: 1rem 0.5rem;
+  }
+  
+  .quiz-completed {
+    padding: 1rem;
+  }
+  
+  .quiz-completed h2 {
+    font-size: 1.8rem;
+  }
+  
+  .quiz-completed .score-display {
+    font-size: 2.8rem;
+  }
+  
+  .quiz-completed .score-text {
+    font-size: 1rem;
+  }
+  
+  .quiz-completed .action-buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .quiz-completed .action-buttons button {
+    width: 100%;
+  }
+}
+
+.question-container {
+  padding: 1.5rem;
+  animation: fadeIn 0.4s ease-out;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.question-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.question-progress {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.timer-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--background);
+  padding: 0.6rem 1rem;
+  border-radius: 0.8rem;
+  border: 1px solid var(--border);
+}
+
+.timer-count {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  min-width: 2.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.timer-count.warning {
+  color: #f59e0b;
+  animation: pulse 1s infinite;
+}
+
+.timer-count.danger {
+  color: #ef4444;
+  animation: pulse 0.5s infinite;
+}
+
+.difficulty-badge {
+  padding: 0.4rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.difficulty-badge.easy {
+  background: linear-gradient(135deg, var(--primary), #9333ea);
+  color: white;
+}
+
+.difficulty-badge.medium {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.difficulty-badge.hard {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.question-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.option-button {
+  background: var(--background);
+  border: 2px solid var(--border);
+  border-radius: 0.8rem;
+  padding: 1.2rem;
+  text-align: left;
+  font-size: 1.05rem;
+  color: var(--text);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.option-button:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+}
+
+.option-button.selected {
+  border-color: var(--primary);
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.option-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(124, 58, 237, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.option-button:hover::before {
+  opacity: 1;
+}
+
+.quiz-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.score-display {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.score-value {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.next-button {
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .trivia-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .question-container {
+    padding: 1rem;
+  }
+
+  .question-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .question-number {
+    font-size: 1.3rem;
+  }
+
+  .timer-badge {
+    padding: 0.5rem 0.8rem;
+  }
+
+  .timer-count {
+    font-size: 1.2rem;
+  }
+
+  .question-text {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .option-button {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .quiz-footer {
+    margin-top: 1.2rem;
+    padding-top: 0.8rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.search-page {
+  padding: 2rem 0;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.search-page-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(120deg, var(--text), var(--text-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.search-box-container {
+  position: relative;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.6s ease-out 0.2s backwards;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--background-light);
+  border: 2px solid rgba(124, 58, 237, 0.1);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.search-input-wrapper:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.15);
+  transform: translateY(-2px);
+}
+
+.search-input {
+  flex: 1;
+  padding: 1.2rem 1.5rem;
+  font-size: 1.1rem;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.search-button {
+  background: linear-gradient(to right, var(--primary), #9333ea);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.8rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+.search-filters {
+  display: flex;
+  gap: 0.8rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.6s ease-out 0.3s backwards;
+}
+
+.filter-button {
+  background: transparent;
+  border: 2px solid rgba(124, 58, 237, 0.15);
+  color: var(--text);
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-button:hover {
+  border-color: var(--primary);
+  background: rgba(124, 58, 237, 0.05);
+  transform: translateY(-1px);
+}
+
+.filter-button.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.search-message {
+  text-align: center;
+  color: var(--text-muted);
+  margin: 3rem 0;
+  font-size: 1.1rem;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.popular-searches {
+  margin-top: 4rem;
+  animation: fadeInUp 0.6s ease-out 0.4s backwards;
+}
+
+.popular-searches-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.popular-tags {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.popular-tag {
+  background: linear-gradient(to right, rgba(124, 58, 237, 0.1), rgba(147, 51, 234, 0.1));
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  color: var(--text);
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.popular-tag:hover {
+  background: linear-gradient(to right, rgba(124, 58, 237, 0.15), rgba(147, 51, 234, 0.15));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+}
+
+@media (max-width: 768px) {
+  .search-page {
+    padding: 1.5rem 1rem;
+  }
+
+  .search-page-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .search-input-wrapper {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .search-button {
+    width: 100%;
+    margin: 0;
+    padding: 0.8rem;
+  }
+
+  .search-filters {
+    justify-content: center;
+  }
+
+  .filter-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .popular-searches {
+    margin-top: 3rem;
+  }
+
+  .popular-searches-title {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .popular-tags {
+    justify-content: center;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

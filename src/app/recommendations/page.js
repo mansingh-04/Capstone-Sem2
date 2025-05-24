@@ -6,80 +6,80 @@ import Image from "next/image"
 import { getGenres, getMoviesByGenre, formatMovieData, getMovieDetails } from "../../lib/tmdb"
 
 export default function Recommendations() {
-  const [genres, setGenres] = useState([]);
-  const [movies, setMovies] = useState([]);
-  const [activeGenre, setActiveGenre] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [genres, setGenres] = useState([])
+  const [movies, setMovies] = useState([])
+  const [activeGenre, setActiveGenre] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+  const [selectedMovie, setSelectedMovie] = useState(null)
   const [genreMap, setGenreMap] = useState({})
 
   useEffect(() => {
     async function fetchGenres() {
       try {
-        const data = await getGenres();
-        const map = {};
-        data.genres.forEach(g => { map[g.id] = g.name });
-        setGenreMap(map);
-        setGenres(data.genres);
+        const data = await getGenres()
+        const map = {}
+        data.genres.forEach(g => { map[g.id] = g.name })
+        setGenreMap(map)
+        setGenres(data.genres)
         if (data.genres.length > 0 && !activeGenre) {
-          setActiveGenre(data.genres[0].id);
+          setActiveGenre(data.genres[0].id)
         }
       } catch (error) {
-        console.error("Error fetching genres:", error);
+        console.error("Error fetching genres:", error)
       }
     }
-    fetchGenres();
-  }, []);
+    fetchGenres()
+  }, [])
 
   useEffect(() => {
     async function fetchMovies() {
-      if (!activeGenre) return;
-      setLoading(true);
+      if (!activeGenre) return
+      setLoading(true)
       try {
-        const data = await getMoviesByGenre(activeGenre);
+        const data = await getMoviesByGenre(activeGenre)
         let sortedMovies = [...data.results].sort((a, b) => {
           if (b.vote_average !== a.vote_average) {
-            return b.vote_average - a.vote_average;
+            return b.vote_average - a.vote_average
           }
-          return new Date(b.release_date) - new Date(a.release_date);
-        });
+          return new Date(b.release_date) - new Date(a.release_date)
+        })
         const formattedMovies = sortedMovies.map(movie => {
-          let genres = [];
+          let genres = []
           if (movie.genre_ids && Array.isArray(movie.genre_ids)) {
-            genres = movie.genre_ids.map(id => genreMap[id]).filter(Boolean).map(name => ({ name }));
+            genres = movie.genre_ids.map(id => genreMap[id]).filter(Boolean).map(name => ({ name }))
           } else if (movie.genres && Array.isArray(movie.genres) && movie.genres[0]?.name) {
-            genres = movie.genres;
+            genres = movie.genres
           }
-          return { ...formatMovieData(movie), genres };
-        });
-        setMovies(formattedMovies);
+          return { ...formatMovieData(movie), genres }
+        })
+        setMovies(formattedMovies)
       } catch (error) {
-        console.error("Error fetching movies:", error);
+        console.error("Error fetching movies:", error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
-    fetchMovies();
-  }, [activeGenre, genreMap]);
+    fetchMovies()
+  }, [activeGenre, genreMap])
 
   const openModal = async (movie) => {
     try {
-      const details = await getMovieDetails(movie.id);
+      const details = await getMovieDetails(movie.id)
       const credits = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`)
-        .then(res => res.json());
-      const actors = credits.cast ? credits.cast.slice(0, 5) : [];
-      setSelectedMovie({ ...movie, actors, genres: details.genres || [] });
+        .then(res => res.json())
+      const actors = credits.cast ? credits.cast.slice(0, 5) : []
+      setSelectedMovie({ ...movie, actors, genres: details.genres || [] })
     } catch (e) {
-      setSelectedMovie({ ...movie, actors: [], genres: [] });
+      setSelectedMovie({ ...movie, actors: [], genres: [] })
     }
-    setShowModal(true);
-  };
+    setShowModal(true)
+  }
 
   const closeModal = () => {
-    setShowModal(false);
-    setSelectedMovie(null);
-  };
+    setShowModal(false)
+    setSelectedMovie(null)
+  }
 
   return (
     <div className="container">

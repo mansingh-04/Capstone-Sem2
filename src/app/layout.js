@@ -1,15 +1,18 @@
-import "./globals.css"
-import ClientLayout from "../components/ClientLayout"
+import { Inter } from 'next/font/google'
+import './globals.css'
+import ClientLayout from '../components/ClientLayout'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: "MovieVerse - Your Ultimate Movie Experience Hub",
-  description: "Discover, search, and test your movie knowledge all in one place",
+  title: 'MovieVerse',
+  description: 'Your ultimate movie companion',
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className={inter.className}>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

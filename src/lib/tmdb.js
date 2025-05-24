@@ -71,11 +71,9 @@ export async function searchMovies(query, page = 1) {
   return fetchFromTMDB('/search/movie', { query, page });
 }
 
-
 export async function searchMulti(query, page = 1) {
   return fetchFromTMDB('/search/multi', { query, page });
 }
-
 
 export async function getMoviesByGenre(genreId, page = 1) {
   return fetchFromTMDB('/discover/movie', { 
@@ -84,7 +82,6 @@ export async function getMoviesByGenre(genreId, page = 1) {
     sort_by: 'popularity.desc'
   });
 }
-
 
 export async function getGenres() {
   return fetchFromTMDB('/genre/movie/list');
