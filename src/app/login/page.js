@@ -1,5 +1,5 @@
 "use client"
-
+import { auth, signInWithEmailAndPassword } from '../../lib/firebase';
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -32,7 +32,24 @@ export default function Login() {
       setError("Password cannot be empty.")
       return
     }
-    router.push("/")
+    try {
+      await signInWithEmailAndPassword(auth, formData.email, formData.password)
+      router.replace("/")
+    } catch (err) {
+      let message = "Failed to sign in. Please try again."
+      if (err.code === "auth/user-not-found") {
+        message = "No account found with this email address."
+      } else if (err.code === "auth/wrong-password") {
+        message = "The password you entered is incorrect. Please try again."
+      } else if (err.code === "auth/invalid-email") {
+        message = "The email address is invalid."
+      } else if (err.code === "auth/too-many-requests") {
+        message = "Access to this account has been temporarily disabled due to many failed login attempts. Please try again later or reset your password."
+      } else if (err.message) {
+        message = err.message;
+      }
+      setError(message)
+    }
   }
 
   return (

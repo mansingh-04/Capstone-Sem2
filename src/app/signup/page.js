@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { auth, createUserWithEmailAndPassword } from '../../lib/firebase';
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -38,11 +39,28 @@ export default function Signup() {
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords don't match")
+      setError("Passwords don't match.")
       return
     }
 
-    router.push("/")
+    try {
+      await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      router.push("/")
+    } catch (err) {
+      let message = "Failed to create account. Please try again."
+      if (err.code === "auth/email-already-in-use") {
+        message = "An account with this email already exists. Please sign in or use a different email."
+      } else if (err.code === "auth/invalid-email") {
+        message = "The email address is invalid."
+      } else if (err.code === "auth/weak-password") {
+        message = "Password is too weak. Please use at least 8 characters."
+      } else if (err.code === "auth/operation-not-allowed") {
+        message = "Sign up is currently disabled. Please contact support."
+      } else if (err.message) {
+        message = err.message;
+      }
+      setError(message)
+    }
   }
 
   return (

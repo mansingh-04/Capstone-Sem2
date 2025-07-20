@@ -4,6 +4,8 @@
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { searchMulti, IMAGE_SIZES, getGenres, getMovieDetails } from "../../lib/tmdb"
+import { addToWishlist, removeFromWishlist, getWishlist } from '../../lib/userData';
+import { auth } from '../../lib/firebase';
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -14,6 +16,7 @@ export default function Search() {
   const [selectedMovie, setSelectedMovie] = useState(null)
   const [genreMap, setGenreMap] = useState({})
   const debounceTimeout = useRef(null)
+  const [wishlist, setWishlist] = useState([]);
 
   useEffect(() => {
     async function fetchGenres() {
@@ -38,6 +41,30 @@ export default function Search() {
       handleSearch()
     }, 400)
   }, [searchQuery, searchFilter])
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      getWishlist(user.uid).then(setWishlist);
+    }
+  }, []);
+
+  const isInWishlist = (movieId) => wishlist.some((m) => m.id === movieId);
+
+  const handleToggleWishlist = async (movie) => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert('Please sign in to manage your wishlist.');
+      return;
+    }
+    if (isInWishlist(movie.id)) {
+      await removeFromWishlist(user.uid, movie.id);
+    } else {
+      await addToWishlist(user.uid, movie);
+    }
+    const updated = await getWishlist(user.uid);
+    setWishlist(updated);
+  };
 
   async function getTVDetails(tvId) {
     const details = await fetch(`https://api.themoviedb.org/3/tv/${tvId}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US`).then(res => res.json());
@@ -227,7 +254,7 @@ export default function Search() {
           <div className="search-results-grid">
             {searchResults.map((item) => (
               (item.type === 'movie' || item.type === 'tv') ? (
-                <div key={item.id} className="search-result-card">
+                <div key={item.id} className="search-result-card movie-card-hover-group">
                   <div className="relative">
                     <Image 
                       src={item.posterPath || "/placeholder.svg"} 
@@ -236,6 +263,17 @@ export default function Search() {
                       sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 250px" 
                       style={{ objectFit: "cover" }} 
                     />
+                    <span
+                      className={`wishlist-heart ${isInWishlist(item.id) ? 'wishlist-heart-active' : ''}`}
+                      onClick={(e) => { e.stopPropagation(); handleToggleWishlist(item); }}
+                      title={isInWishlist(item.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                    >
+                      {isInWishlist(item.id) ? (
+                        <svg width="24" height="24" fill="#e11d48" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                      ) : (
+                        <svg width="24" height="24" fill="none" stroke="#e11d48" strokeWidth="2" viewBox="0 0 24 24"><path d="M12.1 8.64l-.1.1-.11-.11C10.14 6.6 7.1 7.24 5.6 9.28c-1.5 2.04-0.44 5.12 3.4 8.36l2.1 1.92 2.1-1.92c3.84-3.24 4.9-6.32 3.4-8.36-1.5-2.04-4.54-2.68-6.39-0.64z"/></svg>
+                      )}
+                    </span>
                   </div>
                   <div className="search-result-content">
                     <h3>{item.title}</h3>

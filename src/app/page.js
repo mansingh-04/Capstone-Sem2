@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { getPopularMovies, formatMovieData, getMovieDetails, getPersonMovieCredits, getGenres } from "../lib/tmdb"
+import { addToWishlist, removeFromWishlist, getWishlist } from '../lib/userData';
+import { auth } from '../lib/firebase';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,6 +18,7 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false)
   const [selectedMovie, setSelectedMovie] = useState(null)
   const [genreMap, setGenreMap] = useState({})
+  const [wishlist, setWishlist] = useState([]);
 
   useEffect(() => {
     async function fetchGenres() {
@@ -64,6 +67,30 @@ export default function Home() {
 
     fetchData()
   }, [currentPage, genreMap])
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      getWishlist(user.uid).then(setWishlist);
+    }
+  }, []);
+
+  const isInWishlist = (movieId) => wishlist.some((m) => m.id === movieId);
+
+  const handleToggleWishlist = async (movie) => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert('Please sign in to manage your wishlist.');
+      return;
+    }
+    if (isInWishlist(movie.id)) {
+      await removeFromWishlist(user.uid, movie.id);
+    } else {
+      await addToWishlist(user.uid, movie);
+    }
+    const updated = await getWishlist(user.uid);
+    setWishlist(updated);
+  };
 
   const getPageNumbers = () => {
     const pages = []
@@ -133,7 +160,7 @@ export default function Home() {
             <>
               <div className="movie-grid">
                 {movies.map(movie => (
-                  <div key={movie.id} className="card">
+                  <div key={movie.id} className="card movie-card-hover-group">
                     <div className="relative aspect-[2/3] w-full">
                       <Image 
                         src={movie.posterPath || "/placeholder.svg"} 
@@ -143,6 +170,17 @@ export default function Home() {
                         style={{ objectFit: "cover" }} 
                       />
                       <div className="movie-rating">{movie.rating.toFixed(1)}</div>
+                      <span
+                        className={`wishlist-heart ${isInWishlist(movie.id) ? 'wishlist-heart-active' : ''}`}
+                        onClick={(e) => { e.stopPropagation(); handleToggleWishlist(movie); }}
+                        title={isInWishlist(movie.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                      >
+                        {isInWishlist(movie.id) ? (
+                          <svg width="24" height="24" fill="#e11d48" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        ) : (
+                          <svg width="24" height="24" fill="none" stroke="#e11d48" strokeWidth="2" viewBox="0 0 24 24"><path d="M12.1 8.64l-.1.1-.11-.11C10.14 6.6 7.1 7.24 5.6 9.28c-1.5 2.04-0.44 5.12 3.4 8.36l2.1 1.92 2.1-1.92c3.84-3.24 4.9-6.32 3.4-8.36-1.5-2.04-4.54-2.68-6.39-0.64z"/></svg>
+                        )}
+                      </span>
                     </div>
                     <div className="p-4 search-result-content">
                       <h3>{movie.title}</h3>

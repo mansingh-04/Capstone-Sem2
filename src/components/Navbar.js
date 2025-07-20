@@ -3,10 +3,22 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { auth } from '../lib/firebase';
+import { signOut } from 'firebase/auth';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [user, setUser] = useState(null);
   const pathname = usePathname()
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(setUser);
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
 
   return (
     <nav className="navbar">
@@ -21,11 +33,18 @@ export default function Navbar() {
           <Link href="/recommendations" className={pathname.startsWith("/recommendations") ? "active" : ""}>Recommendations</Link>
           <Link href="/search" className={pathname.startsWith("/search") ? "active" : ""}>Search</Link>
           <Link href="/trivia" className={pathname.startsWith("/trivia") ? "active" : ""}>Trivia</Link>
+          <Link href="/wishlist" className={pathname.startsWith("/wishlist") ? "active" : ""}>Wishlist</Link>
         </div>
         <div className="navbar-actions">
           <ThemeToggle />
-          <Link href="/login" className="btn btn-secondary">Sign In</Link>
-          <Link href="/signup" className="btn btn-primary">Sign Up</Link>
+          {user ? (
+            <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
+          ) : (
+            <>
+              <Link href="/login" className="btn btn-secondary">Sign In</Link>
+              <Link href="/signup" className="btn btn-primary">Sign Up</Link>
+            </>
+          )}
         </div>
         <button className="navbar-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Open menu">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -42,8 +61,14 @@ export default function Navbar() {
             <Link href="/trivia" className={pathname.startsWith("/trivia") ? "active" : ""} onClick={() => setMobileMenuOpen(false)}>Trivia</Link>
             <div className="navbar-mobile-actions">
               <ThemeToggle />
-              <Link href="/login" className="btn btn-secondary" onClick={() => setMobileMenuOpen(false)}>Sign In</Link>
-              <Link href="/signup" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>Sign Up</Link>
+              {user ? (
+                <button className="btn btn-secondary" onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>Logout</button>
+              ) : (
+                <>
+                  <Link href="/login" className="btn btn-secondary" onClick={() => setMobileMenuOpen(false)}>Sign In</Link>
+                  <Link href="/signup" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>Sign Up</Link>
+                </>
+              )}
             </div>
           </div>
         </div>
