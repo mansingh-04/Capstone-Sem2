@@ -98,9 +98,9 @@ export default function Login() {
                 Remember me
               </label>
             </div>
-            <Link href="/forgot-password" className="text-sm text-[#7c3aed] hover:underline">
+            {/* <Link href="/forgot-password" className="text-sm text-[#7c3aed] hover:underline">
               Forgot password?
-            </Link>
+            </Link> */}
           </div>
 
           <button type="submit" className="btn btn-primary w-full">

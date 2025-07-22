@@ -33,7 +33,7 @@ export default function Navbar() {
           <Link href="/recommendations" className={pathname.startsWith("/recommendations") ? "active" : ""}>Recommendations</Link>
           <Link href="/search" className={pathname.startsWith("/search") ? "active" : ""}>Search</Link>
           <Link href="/trivia" className={pathname.startsWith("/trivia") ? "active" : ""}>Trivia</Link>
-          <Link href="/wishlist" className={pathname.startsWith("/wishlist") ? "active" : ""}>Wishlist</Link>
+          <Link href="/wishlist" className={pathname.startsWith("/wishlist") ? "active" : ""}>Watch List</Link>
         </div>
         <div className="navbar-actions">
           <ThemeToggle />

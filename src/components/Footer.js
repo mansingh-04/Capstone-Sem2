@@ -18,16 +18,16 @@ export default function Footer() {
               <li><Link href="/recommendations">Recommendations</Link></li>
               <li><Link href="/search">Movie Search</Link></li>
               <li><Link href="/trivia">Movie Trivia</Link></li>
-              <li><Link href="/watch-list">Watch List</Link></li>
+              <li><Link href="/wishlist">Watch List</Link></li>
             </ul>
           </div>
 
           <div className="footer-links">
             <h3 className="footer-title">Company</h3>
             <ul>
-              <li><Link href="/contact">Contact</Link></li>
-              <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-              <li><Link href="/terms-of-service">Terms of Service</Link></li>
+              <li><Link href="https://www.linkedin.com/in/manpreet-singh-9bb415318/">Contact</Link></li>
+              {/* <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+              <li><Link href="/terms-of-service">Terms of Service</Link></li> */}
             </ul>
           </div>
         </div>
