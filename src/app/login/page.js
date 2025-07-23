@@ -44,7 +44,15 @@ export default function Login() {
       } else if (err.code === "auth/invalid-email") {
         message = "The email address is invalid."
       } else if (err.code === "auth/too-many-requests") {
-        message = "Access to this account has been temporarily disabled due to many failed login attempts. Please try again later or reset your password."
+        message = "Access to this account has been temporarily disabled due to many failed login attempts. Please try again later."
+      } else if (err.code === "auth/network-request-failed") {
+        message = "Network error. Please check your internet connection and try again."
+      } else if (err.code === "auth/internal-error") {
+        message = "An internal error occurred. Please try again later."
+      } else if (err.code === "auth/operation-not-allowed") {
+        message = "Sign in is currently disabled. Please contact support."
+      } else if (err.code === "auth/invalid-credential") {
+        message = "Your login credentials are invalid or have expired. Please check your email and password and try again. If the problem persists, try signing up for a new account."
       } else if (err.message) {
         message = err.message;
       }
